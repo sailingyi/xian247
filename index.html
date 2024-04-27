@@ -8,6 +8,7 @@
 
 <body>
     <div class="container text-center">
+            <div id="alertContainer" class="mt-3"></div> 
             <h1>Generate Image based on Prompt</h1>
             <p>(1) Unsplash Image</p>
             <p>Enter text to generate an image:</p>
@@ -27,7 +28,20 @@
         function generateImage() {
             const textPrompt = document.getElementById('textPromptInput').value;
             const imageContainer = document.getElementById('imageContainer');
-            
+            const _alertContainer = document.getElementById('alertContainer');
+            if (!textPrompt) {
+                throw new Error('Missing Stability API key.');
+                _alertContainer.innerHTML = '';
+                _alertContainer.appendChild(
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Holy guacamole!</strong> You should check in on your Image Prompt fields.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                );
+            }
+
             // You can make an AJAX call here to fetch image based on text input
             // For demonstration purposes, let's just display a placeholder image
             const placeholderImageUrl = 'https://source.unsplash.com/featured/?' + textPrompt;
@@ -81,8 +95,20 @@
         function generateImage2(){
             const textPrompt = document.getElementById('textPromptInput').value;
             const textKey = document.getElementById('textKeyInput').value;
+            const _alertContainer = document.getElementById('alertContainer');
             if (!textPrompt) throw new Error('Missing Image Prompts.')
-            if (!textKey) throw new Error('Missing Stability API key.')
+            if (!textKey) {
+                throw new Error('Missing Stability API key.');
+                _alertContainer.innerHTML = '';
+                _alertContainer.appendChild(
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Holy guacamole!</strong> You should check in on your API key fields.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                );
+            }
 
             fetch('https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image', 
                 {
